@@ -1,11 +1,11 @@
 public class WordleGameLogic {
 
-    private final String secret;
-    private final int wordLength;
-    private final int maxGuesses = 6;
-    private int attempts;
-    private final Words words;
-    private final Input input;
+    public String secret;
+    public final int wordLength;
+    public final int maxGuesses = 6;
+    public int attempts;
+    public final Words words;
+    public final Input input;
 
     public WordleGameLogic(Words words, Input input) {
         this.words = words;
@@ -15,11 +15,11 @@ public class WordleGameLogic {
         this.attempts = 0;
     }
 
-    private boolean isCorrect(String guess) {
+    public boolean isCorrect(String guess) {
         return guess.equals(secret);
     }
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         return attempts >= maxGuesses;
     }
 
@@ -47,8 +47,24 @@ public class WordleGameLogic {
         input.close();
     }
 
-    private String generateFeedback(String guess) {
-        return null;//need to do
+    public String generateFeedback(String guess) {
+        int length = secret.length();
+        StringBuilder feedback = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            char g = guess.charAt(i);
+            char s = secret.charAt(i);
+
+            if (g == s) {
+                feedback.append("🟩");
+            } else if (secret.indexOf(g) != -1) {
+                feedback.append("🟨");
+            } else {
+                feedback.append("⬛");
+            }
+        }
+
+        return feedback.toString(); // returns an actual String
     }
 
 }
